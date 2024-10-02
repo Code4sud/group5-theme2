@@ -1,9 +1,14 @@
 # save this as app.py
-from flask import Flask
-from flask import render_template
+from fastapi import FastAPI, Request
+from fastapi.responses import HTMLResponse
+from fastapi.templating import Jinja2Templates 
 
-app = Flask(__name__)
+app = FastAPI()
 
-@app.route("/")
-def hello():
-    return render_template('index.html')
+templates = Jinja2Templates(directory="templates")
+
+@app.get("/", response_class=HTMLResponse)
+async def read_item(request: Request):
+    title = "Hello from FastAPI"
+    message = "Hello World !"
+    return templates.TemplateResponse("index.html", {"request": request, "title": title, "message": message})
