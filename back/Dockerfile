@@ -10,6 +10,9 @@ RUN apk add --no-cache curl
 # Installer Jinja2 pour le templating
 RUN pip install Jinja2
 
+# Installer python-multipart pour gérer les formulaires
+RUN pip install python-multipart
+
 # Ajouter un utilisateur non-root pour plus de sécurité
 RUN adduser -D nonroot
 RUN mkdir /home/app/ && chown -R nonroot:nonroot /home/app

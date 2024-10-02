@@ -1,7 +1,5 @@
+from db import models, schemas
 from sqlalchemy.orm import Session
-
-from .. import models, schemas
-
 
 def get_user(db: Session, user_id: int):
     return db.query(models.User).filter(models.User.id == user_id).first()
@@ -13,6 +11,15 @@ def get_user_by_email(db: Session, email: str):
 
 def get_users(db: Session, skip: int = 0, limit: int = 100):
     return db.query(models.User).offset(skip).limit(limit).all()
+
+
+def create_simpleuser(db: Session, name: str, city:str):
+    db_simpleuser = models.SimpleUser(name = name, city = city)
+
+    db.add(db_simpleuser)
+    db.commit()
+    db.refresh(db_simpleuser)
+    return db_simpleuser
 
 
 def create_user(db: Session, user: schemas.UserCreate):

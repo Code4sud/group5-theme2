@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block title %}Example{% endblock %}
+
+{% block content %}
+<h1>Welcome to Example!</h1>
+
+<form action="/create_simple_user" method="post">
+    <label for="name">Name:</label>
+    <input type="text" id="name" name="name" required>
+
+    <label for="city">City:</label>
+    <input type="text" id="city" name="city" required>
+
+    <button type="submit">Submit</button>
+</form>
+
+<a href="/">Back to Home</a>
+
+{% endblock %}
