@@ -25,3 +25,8 @@ après une modif du code  :
 
 http://localhost:5001/ 
 
+
+avoir les logs :
+
+    docker logs -f <container id>
+

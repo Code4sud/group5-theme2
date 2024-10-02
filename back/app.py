@@ -1,8 +1,24 @@
 from fastapi import FastAPI, Request
 from fastapi.responses import HTMLResponse, RedirectResponse
 from fastapi.templating import Jinja2Templates 
+from sqlalchemy.orm import Session
+from db.database import SessionLocal, engine
+from model import models
 
 app = FastAPI()
+
+models.Base.metadata.create_all(bind=engine)
+print("Database tables created")
+
+
+# Dependency
+def get_db():
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()
+
 
 templates = Jinja2Templates(directory="templates")
 
