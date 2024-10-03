@@ -5,12 +5,15 @@
 {% block content %}
 <h1>Welcome to Example!</h1>
 
-<form action="/create_simple_user" method="post">
+<form action="/openai" method="post">
     <label for="name">Name:</label>
     <input type="text" id="name" name="name" required>
 
     <label for="city">City:</label>
     <input type="text" id="city" name="city" required>
+
+    <label for="city">prompt:</label>
+    <input type="text" id="prompt" name="prompt" required>
 
     <button type="submit">Submit</button>
 </form>

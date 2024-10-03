@@ -13,6 +13,9 @@ RUN pip install Jinja2
 # Installer python-multipart pour gérer les formulaires
 RUN pip install python-multipart
 
+# Installer PerplexiPy
+RUN pip install perplexipy
+
 # Ajouter un utilisateur non-root pour plus de sécurité
 RUN adduser -D nonroot
 RUN mkdir /home/app/ && chown -R nonroot:nonroot /home/app
@@ -26,6 +29,9 @@ USER nonroot
 # Copier tous les fichiers dans le conteneur
 COPY --chown=nonroot:nonroot . .
 
+# Copier le fichier d'environnement (incluant la clé API)
+COPY --chown=nonroot:nonroot openai_secrets.env .env
+
 # Créer un environnement virtuel
 ENV VIRTUAL_ENV=/home/app/venv
 RUN python -m venv $VIRTUAL_ENV
@@ -34,6 +40,9 @@ ENV PATH="$VIRTUAL_ENV/bin:$PATH"
 # Mettre à jour pip et installer les dépendances
 RUN pip install --upgrade pip
 RUN pip install --no-cache-dir --prefer-binary -r requirements.txt
+
+# Charger les variables d'environnement depuis le fichier .env
+RUN echo "source /home/app/.env" >> /home/app/.bashrc
 
 # Exposer le port que l'application utilisera
 EXPOSE 5000
