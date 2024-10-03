@@ -95,11 +95,15 @@ def create_simple_user(
 
 @app.get("/onboarding", response_class=HTMLResponse)
 async def onboarding(request: Request):
-# Définition du chemin d'accès à l'image 'arbre1.jpeg' qui se trouve dans le répertoire
-# monté pour les fichiers statiques. Ce chemin sera utilisé pour afficher l'image
-# dans le template HTML.
-    image_file = "/header/images/arbre1.jpeg"  
-# Retourne une réponse au format HTML en utilisant le template 'onboarding.html'.
-# On passe un dictionnaire contenant l'objet 'request' (qui représente la requête HTTP actuelle)
-# et 'image_file' (le chemin de l'image) afin qu'ils soient accessibles dans le template.
-    return templates.TemplateResponse("onboarding.html", {"request": request, "image_file": image_file})
+    # Définition des chemins d'accès aux images
+    image_file1 = "/header/images/arbre1.jpeg"  
+    image_file2 = "/header/images/arbre2.jpeg"  
+
+    # Retourne une réponse au format HTML en utilisant le template 'onboarding.html'.
+    # On passe un dictionnaire contenant l'objet 'request' (qui représente la requête HTTP actuelle)
+    # et les chemins des deux images afin qu'ils soient accessibles dans le template.
+    return templates.TemplateResponse("onboarding.html", {
+        "request": request,
+        "image_file1": image_file1,
+        "image_file2": image_file2
+    })

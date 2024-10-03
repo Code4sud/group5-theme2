@@ -3,65 +3,107 @@
 {% block title %}Onboarding{% endblock %}
 
 {% block content %}
-<h1> Make it Green</h1>
-<h1>A propos du Site</h1>
-<p>Bienvenue sur Make it Green, une plateforme dédiée à l’imagination de rues plus vertes et durables. Notre objectif est de repenser l’espace urbain en intégrant davantage de végétation, comme des arbres, des jardins, et des espaces verts.
+<section class="onboarding">
+    <h1>Bienvenue chez Make it Green</h1>
+    <h2>A propos du Site</h2>
+        Make it Green, une plateforme dédiée à l’imagination de rues plus vertes et durables. Notre objectif est de repenser l’espace urbain en intégrant davantage de végétation, comme des arbres, des jardins, et des espaces verts.
+        Nous croyons qu’en verdissant nos rues, nous pouvons améliorer la qualité de vie des habitants, favoriser la biodiversité et créer des environnements plus agréables et accueillants. Rejoignez-nous pour explorer des idées innovantes et partager vos visions d’un avenir urbain où la nature et la ville coexistent harmonieusement !
+    </p>
+</section>
 
-    Nous croyons qu’en verdissant nos rues, nous pouvons améliorer la qualité de vie des habitants, favoriser la biodiversité et créer des environnements plus agréables et accueillants. Rejoignez-nous pour explorer des idées innovantes et partager vos visions d’un avenir urbain où la nature et la ville coexistent harmonieusement !</p>
-
-<!-- Carousel -->
-<div class="container mx-auto mt-10 relative">
-    <div class="carousel-inner">
-        <!-- Carousel Items -->
-        <div class="carousel-item active">
-            <img class="w-full h-auto rounded-lg" src=
-        {{ image_file }} >
-        </div>
-
-    <!-- 
-        <div class="carousel-item">
-            <img class="w-full h-auto rounded-lg" src="../templates/header/images/arbre2.jpeg" alt="Image 2">
-        </div>
-        <div class="carousel-item">
-            <img class="w-full h-auto rounded-lg" src="/Users/user/Desktop/Hackathon/group5-theme2/back/templates/header/images/arbre3.jpeg" alt="Image 3">
-        </div>
+<!-- Images côte à côte section 2 du site -->
+<section class="example"> 
+    <h1 class="text-center">A quoi peut ressembler votre quartier demain?</h1> 
+</section>
+<div class="image-container flex justify-center mt-10">
+    <div class="image-item text-center mx-4">
+        <img class="w-full h-auto rounded-lg" src="{{ image_file1 }}" alt="Vue initiale">
+        <h3 class="mt-2">Avant : Vue actuelle</h3>
     </div>
-    -->
 
-    <!-- Navigation Controls -->
-    <button onclick="prevSlide()" class="absolute left-0 top-1/2 transform -translate-y-1/2 bg-gray-800 text-white p-2 rounded-full">
-        &#10094;
-    </button>
-    <button onclick="nextSlide()" class="absolute right-0 top-1/2 transform -translate-y-1/2 bg-gray-800 text-white p-2 rounded-full">
-        &#10095;
-    </button>
+    <div class="image-item text-center mx-4">
+        <img class="w-full h-auto rounded-lg" src="{{ image_file2 }}" alt="Vue avec la solution Make it Green">
+        <h3 class="mt-2">Après : Vision de Make it Green</h3>
+    </div>
 </div>
 
-<script>
-    let currentIndex = 0;
+<!-- ici on rajoute le lien vers la page de recherche -->
+<div class="text-center mt-10"> <!-- Ajout d'une div pour centrer le bouton -->
+    <a href="{{ url_for('search') }}">
+        <button>Commencer</button>
+    </a>
+</div>
 
-    function showSlide(index) {
-        const slides = document.querySelectorAll('.carousel-item');
-        const totalSlides = slides.length;
-        if (index >= totalSlides) {
-            currentIndex = 0;
-        } else if (index < 0) {
-            currentIndex = totalSlides - 1;
-        } else {
-            currentIndex = index;
-        }
-        const carouselInner = document.querySelector('.carousel-inner');
-        const offset = -currentIndex * 100;
-        carouselInner.style.transform = `translateX(${offset}%)`;
+<div style="padding: 30px 0;"> <!-- Ajout d'un padding après le bouton -->
+</div>
+</section>
+
+<!-- Styles -->
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f8f9fa;
+        margin: 0;
+        padding: 20px;
     }
 
-    function nextSlide() {
-        showSlide(currentIndex + 1);
+    button {
+        background-color: #ff9900;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 20px;
+        cursor: pointer;
+        font-size: 16px;
     }
 
-    function prevSlide() {
-        showSlide(currentIndex - 1);
+    button:hover {
+        background-color: #0056b3;
     }
-</script>
+
+    .onboarding {
+        text-align: center;
+        background-color: #f9ece2; 
+        color: black; 
+        padding: 50px 20px; 
+        border-radius: 20px; 
+        max-width: 900px; 
+        margin: 50px auto;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+.onboarding h1
+{
+    text-align: center; 
+        font-size: 2.5em; 
+        margin-top: 20px; 
+}
+.onboarding h2
+{
+    text-align: center; 
+        font-size: 1.6em; 
+        margin-top: 20px; 
+}
+    .image-container {
+        display: flex;
+        justify-content: center; /* Centre les images */
+    }
+
+    .image-item {
+        padding: 20px; /* Padding autour de chaque image */
+        max-width: 500px; /* Augmentation de la largeur maximale de chaque image */
+        width: 100%; /* Assure que les images s'adaptent au conteneur */
+    }
+
+    .image-item img {
+        width: 100%; /* Prend toute la largeur du conteneur */
+        height: auto; /* Conserve le ratio d'aspect de l'image */
+    }
+
+    .example h1 {
+        text-align: center; /* Centre le titre de la section example */
+        font-size: 2.5em; /* Augmentation de la taille du h1 */
+        margin-top: 20px; /* Ajout d'une marge au-dessus du titre */
+    }
+</style>
 
 {% endblock %}
