@@ -2,24 +2,24 @@
 <html lang="en">
 
 <head>
+    {% block head %}
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}My Website{% endblock %}</title>
+    <!-- Tailwind CSS via CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <title>{% block title %}{% endblock %} - My Webpage</title>
+    {% endblock %}
 </head>
 
 <body>
-    <header style="font-size: 2em">
-        <nav>
-            <a href="/onboarding">Onboarding</a>
-            <a href="/search">Search</a>
-            <a href="/result">Result</a>
-            <a href="/example">Exemple</a>
-        </nav>
-    </header>
+    {% include "/header/header.html" %}
 
     <main>
-        {% block content %}{% endblock %}
+        {% block content %}
+        {% endblock %}
     </main>
+    {% include "/footer/footer.html" %}
+    
 </body>
 
 </html>

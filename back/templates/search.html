@@ -3,7 +3,70 @@
 {% block title %}Search{% endblock %}
 
 {% block content %}
-<h1>This is the Search Page!</h1>
-<a href="/">Back to Home</a>
+<!--<h1>This is the Search Page!</h1>
+<a href="/">Back to Home</a>-->
 
+<section style="height: calc(100vh - 80px);" class="p-8">
+    <div class="w-full h-full px-6 bg-white rounded-lg bg-gray-100 flex items-center">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="flex flex-col justify-center p-6">
+          <h1 class="text-4xl font-bold text-gray-800 mb-4">Greener Votre Espace</h1>
+          <p class="text-gray-600 mb-6">
+            Entrez votre adresse pour réinventer votre espace et le transformer en un lieu plus vert et durable
+          </p>
+          <form>
+            <label for="address" class="block text-sm font-medium text-gray-700 mb-2">Saisir l'adresse</label>
+            <input type="text" id="address" name="address" placeholder="Votre adresse"
+                   class="w-full p-3 border bg-gray-100 border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 mb-4"/>
+            <button type="submit" onclick="loadStreetView()" class="px-6 py-2 bg-black text-white font-semibold rounded-md">Envoyer</button>
+          </form>
+        </div>
+        <div class="flex items-center justify-center p-6">
+          <div id="street-view" class="w-full h-full">
+            
+          </div>
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBYqMv2AyM136YCCNmQY-be2qqlylBDPgc"></script>
+
+        <script>
+          let panorama;
+
+          function initialize(lat, lng) {
+            const location = { lat: lat, lng: lng };
+            panorama = new google.maps.StreetViewPanorama(
+              document.getElementById('street-view'),
+              {
+                position: location,
+                pov: {
+                  heading: 34,
+                  pitch: 10,
+                },
+              }
+            );
+          }
+
+          function geocodeAddress(address) {
+            const geocoder = new google.maps.Geocoder();
+            geocoder.geocode({ address: address }, (results, status) => {
+              if (status === 'OK') {
+                const location = results[0].geometry.location;
+                initialize(location.lat(), location.lng());
+              } else {
+                alert('Adresse non trouvée : ' + status);
+              }
+            });
+          }
+
+          function loadStreetView() {
+            const address = document.getElementById('address').value;
+            if (address) {
+              geocodeAddress(address);
+            } else {
+              alert('Veuillez entrer une adresse.');
+            }
+          }
+        </script>
+      </div>
+      </div>
+    </div>
+  </section>
 {% endblock %}

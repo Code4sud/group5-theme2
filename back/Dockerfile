@@ -20,6 +20,9 @@ RUN mkdir /home/app/ && chown -R nonroot:nonroot /home/app
 # Définir le répertoire de travail
 WORKDIR /home/app
 
+# Copie le répertoire static dans l'image Docker
+COPY ./static /home/app/static
+
 # Changer l'utilisateur
 USER nonroot
 

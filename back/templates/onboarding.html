@@ -4,5 +4,34 @@
 
 {% block content %}
 <h1>Welcome to Onboarding!</h1>
+<ul id="menuList" class="menu-list">
+    <li>
+        <a href="/onboarding">Onboarding</a>
+    </li>
+    <li>
+        <a href="/search">Search</a>
+    </li>
+    <li>
+        <a href="/result">Result</a>
+    </li>
+    <li>
+        <a href="/example">Exemple</a>
+    </li>
+</ul>
 
+<section class="bg-gray-100 py-12">
+    <div class="container mx-auto px-6 text-center">
+      <h1 class="text-5xl font-bold text-gray-800">
+        Welcome to My Website
+      </h1>
+      <p class="mt-4 text-gray-600">
+        This is a simple hero section to test Tailwind CSS functionality.
+      </p>
+      <div class="mt-6">
+        <a href="#" class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-700">
+          Get Started
+        </a>
+      </div>
+    </div>
+  </section>
 {% endblock %}
