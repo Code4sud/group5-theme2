@@ -13,6 +13,9 @@ RUN pip install Jinja2
 # Installer python-multipart pour gérer les formulaires
 RUN pip install python-multipart
 
+# Installer PerplexiPy
+RUN pip install perplexipy
+
 # Ajouter un utilisateur non-root pour plus de sécurité
 RUN adduser -D nonroot
 RUN mkdir /home/app/ && chown -R nonroot:nonroot /home/app
@@ -26,7 +29,7 @@ USER nonroot
 # Copier tous les fichiers dans le conteneur
 COPY --chown=nonroot:nonroot . .
 
-# Copier le fichier d'environnement
+# Copier le fichier d'environnement (incluant la clé API)
 COPY --chown=nonroot:nonroot openai_secrets.env .env
 
 # Créer un environnement virtuel

@@ -7,13 +7,11 @@ from fastapi.staticfiles import StaticFiles
 from db.database import SessionLocal, engine
 from db import crud , database, models, schemas
 import os 
-import openai
-
+from perplexipy import PerplexityClient
 
 app = FastAPI()
 
 models.Base.metadata.create_all(bind=engine)
-openai_api_key = os.getenv("OPENAI_API_KEY")
 
 
 def get_db():
@@ -55,23 +53,27 @@ async def example(request: Request):
     return templates.TemplateResponse("example.html", {"request": request})
 
 
+
+key = os.environ['PERPLEXITY_API_KEY']
+client = PerplexityClient(key = key)
+
+
 @app.post("/openai")
 async def query_openai(
     name: str = Form(...), 
     city: str = Form(...), 
     prompt: str = Form(...)):
-    if not openai_api_key:
+    if not key:
         raise HTTPException(status_code=500, detail="OpenAI API key is not configured.")
     
     try:
-        openai.api_key = openai_api_key
-        response = openai.Completion.create(
-            engine="gpt-4-turbo-2024-04-09",
-            prompt=prompt,
-            max_tokens=100  
-        )
-        print(response.choices[0].text.strip())
-        return {"response": response.choices[0].text.strip()}
+        result = client.query('what is the climate of that location : grand rue, Strasbourg 67000. tell me 3 types of trees we can find in that region. anwser should only be a json file with the keys :  climate (str) et treeList (list str)' )
+    
+    
+
+        print(result)
+       
+        return client.query('what is the climate of that location : grand rue, Strasbourg 67000. tell me 3 types of trees we can find in that region. anwser should only be a json file with the keys :  climate (str) et treeList (list str)' )
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
