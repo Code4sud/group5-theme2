@@ -6,10 +6,14 @@ from sqlalchemy.orm import Session
 from fastapi.staticfiles import StaticFiles
 from db.database import SessionLocal, engine
 from db import crud , database, models, schemas
+import os 
+import openai
+
 
 app = FastAPI()
 
 models.Base.metadata.create_all(bind=engine)
+openai_api_key = os.getenv("OPENAI_API_KEY")
 
 
 def get_db():
@@ -49,6 +53,28 @@ async def result(request: Request):
 @app.get("/example", response_class=HTMLResponse)
 async def example(request: Request):
     return templates.TemplateResponse("example.html", {"request": request})
+
+
+@app.post("/openai")
+async def query_openai(
+    name: str = Form(...), 
+    city: str = Form(...), 
+    prompt: str = Form(...)):
+    if not openai_api_key:
+        raise HTTPException(status_code=500, detail="OpenAI API key is not configured.")
+    
+    try:
+        openai.api_key = openai_api_key
+        response = openai.Completion.create(
+            engine="gpt-4-turbo-2024-04-09",
+            prompt=prompt,
+            max_tokens=100  
+        )
+        print(response.choices[0].text.strip())
+        return {"response": response.choices[0].text.strip()}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
 
 @app.post("/create_simple_user")
 def create_simple_user(
