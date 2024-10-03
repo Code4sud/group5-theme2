@@ -3,35 +3,65 @@
 {% block title %}Onboarding{% endblock %}
 
 {% block content %}
-<h1>Welcome to Onboarding!</h1>
-<ul id="menuList" class="menu-list">
-    <li>
-        <a href="/onboarding">Onboarding</a>
-    </li>
-    <li>
-        <a href="/search">Search</a>
-    </li>
-    <li>
-        <a href="/result">Result</a>
-    </li>
-    <li>
-        <a href="/example">Exemple</a>
-    </li>
-</ul>
+<h1> Make it Green</h1>
+<h1>A propos du Site</h1>
+<p>Bienvenue sur Make it Green, une plateforme dédiée à l’imagination de rues plus vertes et durables. Notre objectif est de repenser l’espace urbain en intégrant davantage de végétation, comme des arbres, des jardins, et des espaces verts.
 
-<section class="bg-gray-100 py-12">
-    <div class="container mx-auto px-6 text-center">
-      <h1 class="text-5xl font-bold text-gray-800">
-        Welcome to My Website
-      </h1>
-      <p class="mt-4 text-gray-600">
-        This is a simple hero section to test Tailwind CSS functionality.
-      </p>
-      <div class="mt-6">
-        <a href="#" class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-700">
-          Get Started
-        </a>
-      </div>
+    Nous croyons qu’en verdissant nos rues, nous pouvons améliorer la qualité de vie des habitants, favoriser la biodiversité et créer des environnements plus agréables et accueillants. Rejoignez-nous pour explorer des idées innovantes et partager vos visions d’un avenir urbain où la nature et la ville coexistent harmonieusement !</p>
+
+<!-- Carousel -->
+<div class="container mx-auto mt-10 relative">
+    <div class="carousel-inner">
+        <!-- Carousel Items -->
+        <div class="carousel-item active">
+            <img class="w-full h-auto rounded-lg" src=
+        {{ image_file }} >
+        </div>
+
+    <!-- 
+        <div class="carousel-item">
+            <img class="w-full h-auto rounded-lg" src="../templates/header/images/arbre2.jpeg" alt="Image 2">
+        </div>
+        <div class="carousel-item">
+            <img class="w-full h-auto rounded-lg" src="/Users/user/Desktop/Hackathon/group5-theme2/back/templates/header/images/arbre3.jpeg" alt="Image 3">
+        </div>
     </div>
-  </section>
+    -->
+
+    <!-- Navigation Controls -->
+    <button onclick="prevSlide()" class="absolute left-0 top-1/2 transform -translate-y-1/2 bg-gray-800 text-white p-2 rounded-full">
+        &#10094;
+    </button>
+    <button onclick="nextSlide()" class="absolute right-0 top-1/2 transform -translate-y-1/2 bg-gray-800 text-white p-2 rounded-full">
+        &#10095;
+    </button>
+</div>
+
+<script>
+    let currentIndex = 0;
+
+    function showSlide(index) {
+        const slides = document.querySelectorAll('.carousel-item');
+        const totalSlides = slides.length;
+        if (index >= totalSlides) {
+            currentIndex = 0;
+        } else if (index < 0) {
+            currentIndex = totalSlides - 1;
+        } else {
+            currentIndex = index;
+        }
+        const carouselInner = document.querySelector('.carousel-inner');
+        const offset = -currentIndex * 100;
+        carouselInner.style.transform = `translateX(${offset}%)`;
+    }
+
+    function nextSlide() {
+        showSlide(currentIndex + 1);
+    }
+
+    function prevSlide() {
+        showSlide(currentIndex - 1);
+    }
+</script>
+
 {% endblock %}
