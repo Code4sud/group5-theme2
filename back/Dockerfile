@@ -33,7 +33,7 @@ COPY --chown=nonroot:nonroot . .
 RUN chmod 755 templates/header/images
 
 # Copier le fichier d'environnement (incluant la clé API)
-COPY --chown=nonroot:nonroot openai_secrets.env .env
+# COPY --chown=nonroot:nonroot openai_secrets.env .env
 
 # Créer un environnement virtuel
 ENV VIRTUAL_ENV=/home/app/venv
