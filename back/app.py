@@ -1,16 +1,17 @@
 from db import models
-from fastapi import FastAPI, Request, Depends, Form, HTTPException
+from fastapi import FastAPI, Request, Depends, Form, HTTPException, File, UploadFile
 from fastapi.responses import HTMLResponse, RedirectResponse
-from fastapi.templating import Jinja2Templates 
+from fastapi.templating import Jinja2Templates
 from sqlalchemy.orm import Session
 from fastapi.staticfiles import StaticFiles
 from db.database import SessionLocal, engine
-from db import crud , database, models, schemas
+from db import crud, database, models, schemas
+import shutil
+import os
 
 app = FastAPI()
 
 models.Base.metadata.create_all(bind=engine)
-
 
 def get_db():
     db = SessionLocal()
@@ -19,32 +20,43 @@ def get_db():
     finally:
         db.close()
 
-
-
+# Configuration des templates et fichiers statiques
 templates = Jinja2Templates(directory="templates")
-# Monte le répertoire 'templates/header/images' en tant que source de fichiers statiques
-# à l'URL '/header/images'.
-# Cela permet d'accéder aux fichiers situés dans ce répertoire via une URL,
-# par exemple, pour récupérer une image, on peut utiliser : 
-# http://localhost:8000/header/images/nom_de_l_image.ext
-#  
 app.mount("/header/images", StaticFiles(directory="templates/header/images"), name="images")
 
+# Vérifie si le dossier uploads existe, sinon le crée
+UPLOAD_DIR = "uploads"
+if not os.path.exists(UPLOAD_DIR):
+    os.makedirs(UPLOAD_DIR)
 
+# Route pour gérer l'upload de fichier
+@app.post("/upload")
+async def upload_image(file: UploadFile = File(...)):
+    # Vérification des types de fichiers acceptés
+    if file.content_type not in ["image/jpeg"]:
+        return {"error": "Format de fichier non pris en charge. Seuls les fichiers jpeg sont acceptés."}
+
+    file_location = f"{UPLOAD_DIR}/{file.filename}"
+    try:
+        with open(file_location, "wb") as buffer:
+            shutil.copyfileobj(file.file, buffer)
+    except Exception as e:
+        return {"error": "Une erreur est survenue lors de l'upload."}
+    
+    return {"filename": file.filename}
+
+# Autres routes existantes...
 @app.get("/", response_class=RedirectResponse)
 async def root():
     return RedirectResponse(url="/onboarding")
 
-# page de recherche
 @app.get("/search", response_class=HTMLResponse)
 async def search(request: Request):
     return templates.TemplateResponse("search.html", {"request": request})
 
-
 @app.get("/result", response_class=HTMLResponse)
 async def result(request: Request):
     return templates.TemplateResponse("result.html", {"request": request})
-
 
 @app.get("/example", response_class=HTMLResponse)
 async def example(request: Request):
@@ -60,18 +72,7 @@ def create_simple_user(
     print(user.city, user.name, user.id)
     return RedirectResponse(url="/search", status_code=303)
 
-# @app.get("/get-picture")
-# def get_picture(
-
-# )
-
 @app.get("/onboarding", response_class=HTMLResponse)
 async def onboarding(request: Request):
-# Définition du chemin d'accès à l'image 'arbre1.jpeg' qui se trouve dans le répertoire
-# monté pour les fichiers statiques. Ce chemin sera utilisé pour afficher l'image
-# dans le template HTML.
-    image_file = "/header/images/arbre1.jpeg"  
-# Retourne une réponse au format HTML en utilisant le template 'onboarding.html'.
-# On passe un dictionnaire contenant l'objet 'request' (qui représente la requête HTTP actuelle)
-# et 'image_file' (le chemin de l'image) afin qu'ils soient accessibles dans le template.
+    image_file = "/header/images/arbre1.jpeg"
     return templates.TemplateResponse("onboarding.html", {"request": request, "image_file": image_file})
