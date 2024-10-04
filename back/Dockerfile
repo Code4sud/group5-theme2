@@ -29,6 +29,9 @@ USER nonroot
 # Copier tous les fichiers dans le conteneur
 COPY --chown=nonroot:nonroot . .
 
+# Ajuster les permissions des fichiers et répertoires
+RUN chmod 755 templates/header/images
+
 # Copier le fichier d'environnement (incluant la clé API)
 COPY --chown=nonroot:nonroot openai_secrets.env .env
 

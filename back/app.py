@@ -53,8 +53,7 @@ async def example(request: Request):
     return templates.TemplateResponse("example.html", {"request": request})
 
 
-
-key = os.environ['PERPLEXITY_API_KEY']
+key = "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"
 client = PerplexityClient(key = key)
 
 
@@ -68,11 +67,7 @@ async def query_openai(
     
     try:
         result = client.query('what is the climate of that location : grand rue, Strasbourg 67000. tell me 3 types of trees we can find in that region. anwser should only be a json file with the keys :  climate (str) et treeList (list str)' )
-    
-    
-
         print(result)
-       
         return client.query('what is the climate of that location : grand rue, Strasbourg 67000. tell me 3 types of trees we can find in that region. anwser should only be a json file with the keys :  climate (str) et treeList (list str)' )
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
@@ -96,14 +91,14 @@ def create_simple_user(
 @app.get("/onboarding", response_class=HTMLResponse)
 async def onboarding(request: Request):
     # Définition des chemins d'accès aux images
-    image_file1 = "/header/images/arbre1.jpeg"  
-    image_file2 = "/header/images/arbre2.jpeg"  
+    image_file3 = "/header/images/arbre-new-1.jpg"  
+    image_file4 = "/header/images/arbre-new-2.jpg"  
 
     # Retourne une réponse au format HTML en utilisant le template 'onboarding.html'.
     # On passe un dictionnaire contenant l'objet 'request' (qui représente la requête HTTP actuelle)
     # et les chemins des deux images afin qu'ils soient accessibles dans le template.
     return templates.TemplateResponse("onboarding.html", {
         "request": request,
-        "image_file1": image_file1,
-        "image_file2": image_file2
+        "image_file1": image_file3,
+        "image_file2": image_file4
     })
