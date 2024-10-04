@@ -45,7 +45,11 @@ async def search(request: Request):
 
 @app.get("/result", response_class=HTMLResponse)
 async def result(request: Request):
-    return templates.TemplateResponse("result.html", {"request": request})
+
+    image_file3 = "/header/images/avant.jpg"  
+    image_file4 = "/header/images/apres.jpg"  
+
+    return templates.TemplateResponse("result.html", {"request": request, "image_file1": image_file3,"image_file2": image_file4})
 
 
 @app.get("/example", response_class=HTMLResponse)

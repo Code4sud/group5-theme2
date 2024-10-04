@@ -4,19 +4,26 @@
 
 {% block content %}
 <section class="onboarding">
-    <h1>Bienvenue chez Make it Green</h1>
-    <h2>A propos du Site</h2>
-    Make it Green, une plateforme dédiée à l’imagination de rues plus vertes et durables. Notre objectif est de repenser
-    l’espace urbain en intégrant davantage de végétation, comme des arbres, des jardins, et des espaces verts.
-    Nous croyons qu’en verdissant nos rues, nous pouvons améliorer la qualité de vie des habitants, favoriser la
-    biodiversité et créer des environnements plus agréables et accueillants. Rejoignez-nous pour explorer des idées
-    innovantes et partager vos visions d’un avenir urbain où la nature et la ville coexistent harmonieusement !
-    </p>
+    <h1>A quoi peut ressembler votre quartier demain?</h1>
+    <h2>
+    Make It Green est la plateforme interractive de végétalisation des rues 
+    </h2>
+    <ul>
+        <li class="py-2">
+            Make It Green génère des suggestions d’aménagements écologiques 
+        </li>
+        <li class="py-2">
+            Make It Green propose des solutions centrées sur les plantes locales         
+        </li>
+        <li class="py-2">
+            Make It Green sensibilise aux enjeux de la biodiversité locale 
+        </li>
+    </ul>
 </section>
 
 <!-- Images côte à côte section 2 du site -->
 <section class="example">
-    <h1 class="text-center">A quoi peut ressembler votre quartier demain?</h1>
+    <h1 class="text-center">Découvrez la puissance de MAKE IT GREEN</h1>
 </section>
 <div class="image-container flex justify-center mt-10">
     <div class="image-item text-center mx-4">
@@ -33,7 +40,7 @@
 <!-- ici on rajoute le lien vers la page de recherche -->
 <div class="text-center mt-10"> <!-- Ajout d'une div pour centrer le bouton -->
     <a href="{{ url_for('search') }}">
-        <button>Commencer</button>
+        <button style="min-width: 150px; max-width: 300px;" class = "px-6 py-3 bg-green-900 text-white font-semibold rounded-md hover:bg-green-800 hover:text-white transition-colors duration-300">Commencer</button>
     </a>
 </div>
 
